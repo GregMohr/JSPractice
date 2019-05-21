@@ -4,9 +4,8 @@ function sortByVersion(numBoxes, boxes){
 
   // Iterate and divide boxes
   boxes.forEach(el => {
-    let version = el.slice(el.indexOf(' ') + 1);
-
-    version.charCodeAt(0) < 58 ? newBox.push(el) : oldBox.push(el);
+    console.log("el4: ", el[4], " is less than 58 - ", (el[4] < 58));
+    el[4] < 58 ? newBox.push(el) : oldBox.push(el);
   });
 
   // Sort oldBox boxes
@@ -30,11 +29,8 @@ function sortByVersion(numBoxes, boxes){
 function versionSort(boxes){
   // This sort can break if ID/VERSION string does not follow format of xxx xxxx xxxx xxxx xxxx
   boxes.sort((a,b) => {
-    let verA = a.slice(a.indexOf(' ') + 1),
-        verB = b.slice(b.indexOf(' ') + 1);
-
     // If both versions are alpha. Deeper string sort
-    if(verA.charCodeAt(0) > 64 && verB.charCodeAt(0) > 64){
+    if(a[4] > 64 && b[4] > 64){
       let i = 0,
           n = verA.length;
       while(i < n && verA.charCodeAt(i) === verB.charCodeAt(i)){
@@ -60,12 +56,28 @@ function versionSort(boxes){
   return boxes;
 }
 
+function boxVersionSort(a,b){
+  let i = 4; // Box version starts at index 4
+
+  // Get past all leading matches
+  while(a[i] === b[i]){
+    i++
+  }
+
+  // On first nonmatch, swap if out of order
+  if(a[i] > b[i]){
+    return 1;
+  }
+
+  return 0;
+}
+
 let numBoxes = 6,
     boxes = ['id1 higt kigt andj nidd',
              'id2 1273 3343 5673 1233',
              'id3 eggg eega plef osje',
              'id4 1233 3345 6573 7893',
-             'id5 ffgt drth gghe dwhh',
+             'id5 egff drth gghe dwhh',
              'id6 9873 2522 6623 3333'];
 
 newBox = sortByVersion(numBoxes, boxes);
