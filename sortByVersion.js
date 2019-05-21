@@ -1,28 +1,30 @@
 function sortByVersion(numBoxes, boxes){
-  let old = new Map(),
-      result = [];
+  let oldBox = [],
+      newBox = [];
 
   // Iterate and divide boxes
   boxes.forEach(el => {
-    let id = el.slice(0, el.indexOf(' ')),
-        version = el.slice(el.indexOf(' ') + 1);
+    let version = el.slice(el.indexOf(' ') + 1);
 
-    if (version.charCodeAt(0) < 58){
-      // New box, add to result
-      result.push(el);
-    } else {
-      // Old box, add to old
-      old.set(version, id);
-    }
+    version.charCodeAt(0) < 58 ? newBox.push(el) : oldBox.push(el);
   });
 
-  // Sort old boxes
-  old = new Map([...old.entries()].sort((a, b) => b - a)); // Sorted desc for proper shift into result
+  // Sort oldBox boxes
+  oldBox.sort((a,b) => {
+    let i = 4; // Box version starts at index 4
 
-  // Concat old + result
-  old.forEach((id, ver) => result.unshift(id + " " + ver));
+    while(a[i] === b[i]){
+      i++
+    }
 
-  return result;
+    if(a[i] > b[i]){
+      return 1;
+    }
+
+    return 0;
+  });
+
+  return oldBox.concat(newBox);
 }
 
 function versionSort(boxes){
@@ -66,6 +68,6 @@ let numBoxes = 6,
              'id5 ffgt drth gghe dwhh',
              'id6 9873 2522 6623 3333'];
 
-// result = sortByVersion(numBoxes, boxes);
-result = versionSort(boxes);
-console.log(result);
+newBox = sortByVersion(numBoxes, boxes);
+// newBox = versionSort(boxes);
+console.log(newBox);
