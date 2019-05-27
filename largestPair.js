@@ -1,4 +1,14 @@
 /*
+Note for another approach:
+remove o(nlogn) in sorting the array.
+Instead assuming that the sum we looking for is k, i will divide the array into 2 arrays.
+First array will contain all values which are less than k/2
+Second array will contain all values &gt; k/2
+This is bcoz in a sum if one number is less than k/2, the other has to be larger.
+I will iterate over the smaller array of the 2 since they would rarely be equal.
+For each x in array 1, i will find the k-x in array 2.
+Complexity will be O(n).
+
 recap: find pair with single largest operand that add to target
 
 input:
@@ -39,7 +49,7 @@ function getPackages(truckSpace, packagesSpace){
   return []
 }
 
-let truckSpace = 110, 
+let truckSpace = 160, 
     packagesSpace = [20, 70, 90, 30, 50, 110];
 
 let result = getPackages(truckSpace, packagesSpace);

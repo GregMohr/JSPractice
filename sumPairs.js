@@ -6,7 +6,7 @@ output: array of distinct pairs of ints from i that equal t
 
 function sumPairs(pairs, target){
   let distinctInts = new Set(pairs),
-    result = [];
+      result = [];
 
   distinctInts.forEach((ele) => {
     console.log(`ele: ${ele}`);
